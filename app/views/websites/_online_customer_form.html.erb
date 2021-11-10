@@ -1,0 +1,13 @@
+
+<form class="" id="" data-parsley-validate="true"  action="/save_order" accept-charset="UTF-8" method="get">
+	<label>Your Name</label>
+	<input type="text" name="name" class="form-control" placeholder="Your Name Please"  data-parsley-required="true" data-parsley-required-message="Name is required" required />
+	<label>Mobile No</label>
+	<input type="tel" name="mobile" class="form-control" placeholder="Your Mobile No"  data-parsley-required="true" data-parsley-required-message="Mobile is required" pattern="[0-9]{11}" required/>
+	<small>Format:   mobile should be 11 Digit (03xxxxxxxxx)</small>
+	<label>Address</label>
+	<input type="text" name="address" placeholder="Your Full Address", class="form-control"  data-parsley-required="true" data-parsley-required-message="Address is required" minlength='5' required/>
+	<br>
+	<input type="submit" name="Checkout" value="CheckOut" class="btn btn-info">
+</form>
+

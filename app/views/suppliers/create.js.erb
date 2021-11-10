@@ -1,0 +1,4 @@
+$('#alert_info').html("<%= j(render 'template/alerts')%>");
+<%unless @supplier.errors.present? %>
+	$('#pos-modal').modal('toggle'); 
+<%end%>

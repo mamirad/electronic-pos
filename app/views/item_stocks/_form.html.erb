@@ -1,0 +1,33 @@
+<%= form_for @item_stock, html:{'data-parsley-validate':'true'} do |form| %>
+  <% if item_stock.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(item_stock.errors.count, "error") %> prohibited this item_stock from being saved:</h2>
+
+      <ul>
+      <% item_stock.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :item_id %>
+     <%= form.select :item_id,options_for_select(Item.all.map{|item|["#{item.brand}-"+item.name+"(QTY:#{item.stock_amount})",item.id]},form.object.item_id), {}, { class: 'form-control my_select2' }%>
+  </div>
+
+  <div class="field">
+    <%= form.label :quantity %>
+    <%= form.number_field :quantity,class:'form-control', 'data-parsley-required' => true, 'data-parsley-required-message' => "Quantity  is required" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :remarks %>
+    <%= form.text_field :remarks,class:'form-control' %>
+  </div>
+<br>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+

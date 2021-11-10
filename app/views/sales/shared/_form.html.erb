@@ -1,0 +1,26 @@
+<div class="panel panel-default">
+  <div class="panel-heading">Customer:<span class="customer_name"><%=@customer&.full_name_with_phone%></span></div> 
+    <div class="panel-body">
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div class="tab-pane active" id="sale">
+          <%= render :partial => 'sales/shared/sale_tab' %>       
+        </div>
+        
+        <div class="tab-pane" id="customer">
+          <%#= render :partial => 'sales/shared/customer_info', :object => @sale %>
+
+          <div class="added_customer">
+            <%#= render :partial => 'sales/shared/added_customer' %>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="comments">
+          <%#= render :partial => 'sales/shared/comments', :object => @sale %>
+        </div>
+
+        <%#= render :partial => 'sales/shared/modals' %>
+      
+      </div>
+  </div>
+</div>

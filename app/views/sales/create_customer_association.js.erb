@@ -1,0 +1,3 @@
+<%if @customer.present?%>
+$(".customer_name").html("<%=@customer.full_name_with_phone%>");
+<%end%>

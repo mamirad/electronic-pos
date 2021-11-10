@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Item Stocks</h1>
+<button class="btn btn-default filter_toggle text-right btn-filter">Filter</button>
+<%= link_to 'Reset', item_stocks_path if @filer_reset%>
+<div class="filter_box">
+  <%=form_tag item_stocks_path, method: :get do%>
+        <div class="row">
+          <div class="col-md-6">
+            <label>Item</label>
+            <%=select_tag :item_id, options_for_select(@items_list,params[:item_id]),class: 'form-control my_select2',include_blank: 'select Item',style:'width:100%'%>
+            
+          </div>
+           <div class="col-md-6">
+            <label>Category</label>
+            <%=select_tag :item_category, options_for_select(ItemCategory.all.map{|category|[category.name,category.id]},params[:item_category]),class: 'form-control',include_blank: 'Category'%>
+           </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label>Brand</label>
+            <%= text_field_tag :brand,params[:brand],class:'form-control' %>
+          </div>
+           <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Start Date</label>
+                  <%= date_field_tag :start_date,params[:start_date],class:'form-control' %>
+                </div>
+                <div class="col-md-6">
+                  <label>End Date</label>
+                  <%= date_field_tag :end_date,params[:end_date],class:'form-control' %>
+                </div>
+              </div>
+           </div>
+        </div>
+
+    <input type="submit"  class="btn btn-info btn-xs" value="Search">
+
+  <%end%>
+</div>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Brand</th>
+      <th>Old QTY /New QTY</th>
+      <th>Date</th>
+      <th>Remarks</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @item_stocks.each do |item_stock| %>
+      <% @item = Item.find(item_stock.first.first) %>
+      <tr>
+        <td><%= @item.name %></td>
+        <td><%= @item.brand%></td>
+        <td><%= item_stock.third %>/<%= item_stock.second %></td>
+        <td><%= date_format(item_stock.first.second)%></td>
+        <td><%= item_stock.first.third%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Item Stock', new_item_stock_path,class:'btn btn-default' %>

@@ -1,0 +1,52 @@
+<button class="btn btn-default filter_toggle text-right btn-filter">Filter</button>
+<%= link_to 'Reset', finish_record_items_path if @filer_reset%>
+<div class="filter_box">
+  <%=form_tag finish_record_items_path, method: :get do%>
+        <div class="row">
+          <div class="col-md-6">
+            <label>Item Name</label>
+            <%=select_tag :item_id, options_for_select(@items_list,params[:item_id]),class: 'form-control my_select2',include_blank: 'select Item',style:'width:100%'%>
+          </div>
+           <div class="col-md-6">
+            <label>Category</label>
+            <%=select_tag :customer_id, options_for_select(Customer.all.map{|customer|[customer.full_name,customer.id]},params[:customer_id]),class: 'form-control my_select2',include_blank: 'Customer',style:'width:100%'%>
+           </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label>Start Date</label>
+            <%= date_field_tag :start_date,params[:start_date],class: 'form-control'%>
+          </div>
+           <div class="col-md-6">
+            <label>End Date</label>
+            <%= date_field_tag :end_date,params[:end_date],class: 'form-control'%>
+           </div>
+        </div>
+
+    <input type="submit"  class="btn btn-info btn-xs" value="Search">
+
+  <%end%>
+</div>
+<table class="table table-bordered">
+	<thead>
+		<tr>
+			<th>Customer</th>
+			<th>Item(s)</th>
+			<th>QTY</th>
+      <th>Date</th>
+		</tr>
+	</thead>
+	<tbody>
+		<%@finish_record.each do |fr|%>
+		<tr>
+			<td><%=fr.first.first.present? ? Customer.find(fr.first.first)&.full_name  : 'Other'%></td>
+			<td>
+        <%= link_to fr.first.second.present? ? Item.find(fr.first.second)&.brand+"..."+ Item.find(fr.first.second)&.name  : 'Other' ,sales_path(sale_id:fr.first.fourth,skip_start_date:true)%>
+      </td>
+			<td><%=fr.second%></td>
+      <td><%=date_format(fr.first.third)%></td>        
+		</tr>
+		<%end%>
+		
+	</tbody>
+</table>  

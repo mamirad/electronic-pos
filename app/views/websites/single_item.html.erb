@@ -1,0 +1,47 @@
+<%if @item.present?%>
+<% content_for :meta_tags do %>
+  <meta property="og:url"           content="<%=request.url%>" />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="<%=@item.name%>" />
+  <meta property="og:description"   content="Fresh, save and health Food (0301 49 65 032)" />
+  <meta property="og:image"         content="<%=request.base_url%><%=@item.item_img.url%>" />
+  <meta property="og:image:width"   content="1500" />
+	<meta property="og:image:height"  content="1500" />
+<% end %>
+<form method="get" action="/websites/add_to_cart">
+	<div class="row">
+		<div class="col-md-6">
+			<img src="<%=@item.item_img.url%>" class="img_responsive">
+		</div>
+		<div class="col-md-6">
+			<h1 class="color"><%=@item.name%></h1>
+			<div class="product_price">
+	      <span class="discount_price">
+	        Rs:<%=@item.discount_price%> 
+	      </span>
+	      <br>
+	      <hr>
+	      <center>
+		      <div class="item_quantity">
+		      	<label>Quantity: </label>
+		      	<input type="number" name="quantity" class="form-control" min="1" max="20" value="1">
+		      	<input type="hidden" name="item_id" value="<%=@item.id%>">
+	      	</div>
+	      </center>
+	    </div> 
+	    <br>
+	    <div class="btn-group btn-group-justified">
+	    	<div class="btn-group">
+	    		<button type="submit" class="btn btn-info" formaction="/add_to_cart">ADD To Cart</button>
+	    	</div>
+	    	<div class="btn-group">
+	    		<button type="submit" class="btn btn-success" formaction="/buy_now">Buy Now</button>
+	    	</div>
+	    </div>
+		</div>
+	</div>
+</form>
+<%= social_share_button_tag(@item.name) %>
+<%else%>
+<h1>No Record Found</h1>
+<%end%>

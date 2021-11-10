@@ -1,0 +1,9 @@
+//= require jquery
+//= require jquery_ujs
+//= require parsley
+$('.modal-container').html("<%=escape_javascript render  'template/modal',model_heading: 'Edit Item'%>");
+$('.modal-body').html("<%=escape_javascript render 'items/form'%>");
+$('#pos-modal').modal('show');
+$("#new_item").removeAttr("novalidate");
+$('#new_item').parsley({ 'data-parsley-focus': 'first' });
+

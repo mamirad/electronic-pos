@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  price: 1
+  expense_type: 1
+  remarks: MyString
+  store_configuration: one
+
+two:
+  price: 1
+  expense_type: 1
+  remarks: MyString
+  store_configuration: two

@@ -1,0 +1,13 @@
+if ($("#item-<%=@item.id%>").length==0){
+row = $("<tr id='item-<%=@item.id%>' class=''></tr>");
+  col1 = $("<td><input type='hidden' name='item[]' id='item' value='<%=@item.id%>' class='form-control'><%=@item.id%></td>");
+  col2 = $("<td><%=@item.name%></td>");
+  col3 = $("<td><%= @item.brand %></td>");
+  col4 = $("<td class='width-130'><input type='text' name='item_price[]' id='item_price' value='<%=@item.price%>' data-item-id='<%=@item.id%>' class='form-control'></td>");
+  col5 = $("<td class='width-130'><input type='number' name='quantity[]' id='item_quantity' value='1' class='form-control' data-item-id='<%=@item.id%>'></td>");
+  col6 = $("<td id='item-<%=@item.id%>-total-price'><%=@item.price%></td>");
+  col7 = $("<td><a href='#' onclick='return remove_dumy_lineitem(<%=@item.id%>)'>X</a></td>");
+  row.append(col1,col2,col3,col4,col5,col6,col7).prependTo("#line_items_table");
+}
+$("#auto_search_item").val('');
+

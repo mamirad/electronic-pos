@@ -1,0 +1,6 @@
+<div class="panel-body">
+	Sales: <%= number_to_currency(@total_sale_amount, unit: 'Rs:') %><br />
+	Paid: <%= number_to_currency(@total_paid_amount, unit: 'Rs:') %><br />
+	Profit: <%= number_to_currency(@profit, unit: 'Rs:') %><br />
+    Remaining: <%= number_to_currency(@sale_remaining_amount, unit: 'Rs:') %>
+</div>

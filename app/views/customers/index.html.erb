@@ -1,0 +1,40 @@
+ <div class="panel panel-default">
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>#ID</th>
+            <th>Name</th>
+            <th>Own</th>
+            <th>Phone</th>
+            <th>Address</th>
+
+          </tr>
+        </thead>
+
+        <tbody>
+          <% @customers.each do |customer| %>
+            <tr class="<%=customer.sales.sum(:remaining_amount).to_i  > 0 ? 'danger' : 'success' %>">
+              <td><%= customer.id%></td>
+              <td><%= customer.full_name %></td>  
+              <td><%=customer.sales.sum(:remaining_amount)%></td>
+              <td><%= customer.phone_number%></td>
+              <td><%= customer.city_address%></td>
+              <td>
+                <%= link_to 'Show', edit_customer_path(customer) %> | <%= link_to 'Destroy', customer, method: :delete, data: { confirm: 'Are you sure?' } %>|
+                <%= link_to '',"https://wa.me/+#{customer&.international_phone_format}?text=Dear #{customer.full_name} ",class: 'fa fa-whatsapp btn btn-success ',id: '',target:'_blank' if customer.phone_number.present?%>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <div class="panel-body">
+        <%= will_paginate @customers, renderer: BootstrapPagination::Rails %>
+      </div>
+    </div>
+  </div>
+</div>
+<label>Total Own Amount: <%=@total_remaining%></label>
+
+
+<%= link_to 'New Customer', new_customer_path, :class => "btn btn-success btn-lg active" %>

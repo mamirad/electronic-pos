@@ -1,0 +1,13 @@
+//= require jquery
+//= require jquery_ujs
+//= require parsley
+$('#pos-modal').modal('hide');
+$('body').removeClass('modal-open');
+$('.modal-backdrop').remove();
+
+$('.modal-container').html("<%=escape_javascript render  'template/modal',model_heading: 'Uplod xlsx file'%>");
+$('.modal-body').html("<%=escape_javascript render 'items/pick_file'%>");
+$('#pos-modal').modal('show');
+$("#import_items").removeAttr("novalidate");
+$('#import_items').parsley({ 'data-parsley-focus': 'first' });
+

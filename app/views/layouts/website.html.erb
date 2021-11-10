@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <%= yield(:meta_tags) %>
+
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Template Mo">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <meta name="apple-mobile-web-app-title" content="Add to Home">
+
+<link rel="shortcut icon" sizes="16x16" href="<%=image_path("bfc.jpg")%>">
+<link rel="shortcut icon" sizes="196x196" href="<%=image_path("bfc.jpg")%>">
+<!--link rel="apple-touch-icon-precomposed" sizes="152x152" href="icon-152x152.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="icon-144x144.png">
+<link rel="apple-touch-icon-precomposed" sizes="120x120" href="icon-120x120.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="icon-114x114.png">
+<link rel="apple-touch-icon-precomposed" sizes="76x76" href="icon-76x76.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72" href="icon-72x72.png"-->
+<link rel="apple-touch-icon-precomposed" href="<%=image_path("bfc.jpg")%>">
+<title>BFC</title>
+
+
+<%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
+<%= javascript_include_tag :application, "data-turbolinks-track" => true %>
+
+<%= csrf_meta_tags %>
+</head>
+
+<body>
+  <div class="modal-container">
+    <%#=render  'template/modal'%>
+  </div>
+
+  <div class="container">
+    <div class="store_website_head">
+   <a href="<%=discount_path(store:Base64.encode64(session[:store]),brand: session[:brand].present? ? Base64.encode64(session[:brand]):'')%>" style="color:white;">
+       <%= session[:brand].present? ? session[:brand].upcase+' FOOD' : 'THE BEST FOOD'%>
+     </a>  
+
+    </div>
+    <div class="store_website_head2">
+      <a href="tel:03014965032" class="text-white"><i class="fa fa-phone  red-color ">   </i>   0301 49 65 032</a>
+      
+      <a href="<%=list_cart_path%>">
+        <span class="my_cart"><i class="fa fa-cart-plus" style="font-size:30px;"></i>
+          <sup>
+    
+            <!-- Create an icon wrapped by the fa-stack class -->
+            <span class="fa-stack">
+              <!-- The icon that will wrap the number -->
+              <span class="fa fa-circle-o fa-stack-2x red-color"></span>
+              <!-- a strong element with the custom content, in this case a number -->
+              <strong class="fa-stack-1x red-color">
+                <%=session[:cart]&.count||0%>   
+              </strong>
+            </span> 
+          </sup>
+        </span>
+      </a>
+
+    </div>
+    <%= yield%>
+  </div>
+
+
+
+  <%= yield :javascript %>
+  <div id="alert_info">
+    <%= render :partial => 'template/alerts' %>
+  </div>
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+    var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+    s1.async=true;
+    s1.src='https://embed.tawk.to/60e6ec6bd6e7610a49aa4214/1fa30n2bq';
+    s1.charset='UTF-8';
+    s1.setAttribute('crossorigin','*');
+    s0.parentNode.insertBefore(s1,s0);
+    })();
+  </script>
+  <!--End of Tawk.to Script-->
+</body>
+
+</html>

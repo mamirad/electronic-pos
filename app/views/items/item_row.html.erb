@@ -1,0 +1,12 @@
+row = $("<tr id='item-<%=@item.id%>' class='affected_row'></tr>");
+  col1 = $("<td><%=@item.id%></td>");
+  col2 = $("<td><%=@item.name%></td>");
+  col3 = $("<td><%= @item.item_category.blank? ? '-' : @item.item_category.name %></td>");
+  col4 = $("<td><%= @item.brand %></td>");
+  col5 = $("<td><%= @item.stock_amount %><%= @item.item_unit %></td>");
+  col6 = $("<td><%= @item.amount_sold %><%= @item.item_unit %></td>");
+  col7 = $("<td><%= @item.amount_sold.to_i + @item.stock_amount.to_i %></td>");
+  col8 = $("<td class=<%=expire_at(@item.expire_at)%>><%= @item.expire_at%></td>");
+  col9 = $('<td><span class="glyphicon glyphicon-download"></span><%= number_to_currency(@item.price , unit: config.currency)%><span class="glyphicon glyphicon-upload"></span><%= number_to_currency(@item.cost_price , unit: config.currency)%></td>');
+  col10 = $("<td><%= @item.supplier&.name if @item.supplier.present?%></td>");
+  col11 = $('<td><%= link_to 'Show', edit_item_path(@item),remote:true, class: 'btn btn-xs btn-default'%>|<%= link_to 'Destroy', @item, method: :delete,class: 'btn btn-xs btn-danger', data: { confirm: 'Are you sure?' } %></td>');

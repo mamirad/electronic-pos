@@ -1,0 +1,13 @@
+//= require jquery
+//= require jquery_ujs
+//= require parsley
+$('#pos-modal').modal('hide');
+$('body').removeClass('modal-open');
+$('.modal-backdrop').remove();
+
+$('.modal-container').html("<%=escape_javascript render  'template/modal',model_heading: 'New item categories'%>");
+$('.modal-body').html("<%=escape_javascript render 'item_categories/form'%>");
+$('#pos-modal').modal('show');
+$("#new_item").removeAttr("novalidate");
+$('#new_item').parsley({ 'data-parsley-focus': 'first' });
+

@@ -1,0 +1,102 @@
+<button class="btn btn-default filter_toggle text-right btn-filter">Filter</button>
+<%= link_to 'Reset', sales_path if @filer_reset%>
+<div class="filter_box">
+  <%=form_tag sales_path, method: :get do%>
+        <div class="row">
+          <div class="col-md-6">
+            <label>Sale ID</label>
+            <%= text_field_tag :sale_id,params[:sale_id],class: 'form-control'%>
+          </div>
+           <div class="col-md-6">
+            <label>Customer</label>
+            <%=
+              select_tag :customer,
+               options_for_select(Customer.all.map{|customer|[customer.full_name,customer.id]},params[:customer]),
+                class: 'form-control my_select2',
+                include_blank: 'customer',
+                style:'width:100%'
+            %>
+           </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label>Start Date</label>
+            <%= date_field_tag :start_date,params[:start_date],class:'form-control' %>
+          </div>
+           <div class="col-md-6">
+          <label>End Date</label>
+            <%= date_field_tag :end_date,params[:end_date],class:'form-control' %>
+           </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <label>Own Sale</label>
+            <%=check_box_tag :own_sale,params[:own_sale],checked:false,class:'form-control'%>
+          </div>
+        </div>
+
+          <button type="submit">Submit</button>
+
+  <%end%>
+</div>
+<div class="panel panel-default">
+  <div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Created</th>
+          <th>Customer</th>
+          <th>Type</th>
+          <th>Total</th>
+          <th>Paid</th>
+          <th>Balance</th>
+          <th>Profit</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <%@profit = 0%>
+        <% @sales.each do |sale| %>
+          <tr class="<%= sale.remaining_balance == 0.00 && !sale.total_amount.blank? ? 'success' : '' %>">
+            <%@profit=@profit+sale.line_items.sum(:profit).to_i%>
+            <td><%= sale.id %></td>
+            <td><%= date_format(sale.created_at)  %></td>
+            <td><%= link_to sale&.customer&.full_name,customer_path(sale&.customer&.id),target:'_blank' if sale.customer.present?%></td>
+            <td><%= sale.sale_type%></td>
+            <td><%= number_to_currency(sale.total_amount, unit: config.currency) %></td>
+            <td><%= number_to_currency(sale.paid_total, unit: config.currency) %></td>
+            <td><%= number_to_currency(sale.remaining_amount.to_f, unit: config.currency) %></td>
+            <td><%= number_to_currency(sale.line_items.sum(:profit), unit: config.currency)%></td>
+            <td nowrap><%= link_to 'Show', edit_sale_path(sale),class:'btn btn-default btn-xs' %> <%= link_to '', sale, method: :delete, data: { confirm: 'Are you sure?' },class:'btn btn-danger btn-xs fa fa-trash' %> 
+              <%= link_to '',"/sales/#{ Base64.encode64(sale.id.to_s)}/make_receipt.pdf",class: 'btn btn-info  fa fa-print',id: 'make_receipt' %>
+              <%if sale.customer&.phone_number.present?%>
+                <%= link_to '',"sms:#{sale.customer&.phone_number}?body=Dear #{sale.customer.full_name} BHI AOA! %0aClick on below link to check invoice %0ahttp://#{AppConfig['url']}/sales/#{ Base64.encode64(sale.id.to_s)}/make_receipt.pdf %0aThanks from BFC KRK",class: 'fa fa-envelope btn btn-warning  ',id: ''%>
+                <%= link_to '',"https://wa.me/+#{sale.customer&.international_phone_format}?text=Dear #{sale.customer.full_name} %0a‎Click on below link to view invoice  %0ahttp://#{AppConfig['url']}/sales/#{ Base64.encode64(sale.id.to_s)}/make_receipt.pdf %0aThanks from BFC KRK&attachment=http://#{AppConfig['url']}/sales/#{ Base64.encode64(sale.id.to_s)}",class: 'fa fa-whatsapp btn btn-success ',id: '',target:'_blank'%>
+              <%end%>
+                
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="panel-body">
+      <%= will_paginate @sales, render: BootstrapPagination::Rails %>
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Summary</div>
+
+  <!-- Table -->
+  <%= render :partial => 'template/sales_summary' %>
+</div>
+
+<br>
+
+
+<%= link_to 'New Sale', new_sale_path, :class => "btn btn-success btn-lg active" %>

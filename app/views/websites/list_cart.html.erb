@@ -1,0 +1,68 @@
+<%if @items.present?%>
+	<form method="get" action="/websites/add_to_cart">
+		<%@items.each do |item|%>
+			<div class="row">
+				<div class="col-md-4">
+					<img src="<%=item.item_img.url%>" >
+				</div>
+				<div class="col-md-6">
+					<h2 class="color text-center"><%=item.name%><%=item.brand%></h2>
+					<div class="product_price">
+			      <span class="discount_price">
+			        Rs:<%=item.discount_price%> 
+			      </span>
+			      <br>
+			      <hr>
+			      <center>
+				      <div class="item_quantity">
+					      	<label>QTY: </label>
+					      	<input type="number" name="quantity" id="cart_quantity" data-item-id='<%=item.id%>' class="form-control" min="1" max="20" value="<%=session[:cart][item.id.to_s].to_i%>">
+					      	<input type="hidden" name="item_id" value="<%=item.id%>">
+		    					<%= link_to '<i style="font-size:24px" class="fa">&#xf00d;</i>'.html_safe,destroy_cart_item_path(item_id:item.id),data: { confirm: 'Are you sure?' },class:'btn btn-danger btn-xs' %>
+			      		</div>
+
+			      </center>
+			    </div> 
+			    <br>
+			    <!-- <div class="btn-group btn-group-justified">
+			    	<div class="btn-group">
+			    		<button type="submit" class="btn btn-info" formaction="/add_to_cart">ADD To Cart</button>
+			    	</div>
+			    	<div class="btn-group">
+			    		<button type="submit" class="btn btn-success" formaction="/buy_now">Buy Now</button>
+			    	</div>
+			    </div> -->
+				</div>
+				<div class="col-md-2">
+					
+				</div>
+			</div>
+			<hr>
+		<%end%>
+	</form>
+	<div class="btn-group btn-group-justified">
+		<a href="<%=popup_checkout_path%>" class='btn btn-warning' data-remote="true"><h2><b id="cart_amount">CheckOut(Rs: <%=@cart_amount.to_i%>)</b></h2></a>
+	</div>
+<%else%>
+<h1 class="text-center">
+	<%if session[:order_status].present? && session[:order_status]=='onway'%>
+
+		Your Order is in process!
+		<br> 
+		<b>
+			please Dial 
+			<a href="tel:03014965032" class="">
+				<i class="fa fa-phone  red-color ">   </i>
+			   0301 49 65 032
+			</a>
+		 	to check the Delivery status
+		</b>
+	<%else%>
+		No Record Found:
+	
+	<%end%>
+</h1>
+<div class="btn-group btn-group-justified">
+	<a href="<%=discount_path(store:Base64.encode64(session[:store]),brand:Base64.encode64(session[:brand]))%>" class='btn btn-success'>Return To Home</a>
+</div>
+<%end %>

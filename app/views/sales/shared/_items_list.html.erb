@@ -1,0 +1,6 @@
+<% @available_items.each do |itm| %>
+  <%#= link_to "link1", "#",{:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#modal-window'} %>
+
+    <!-- Don't remove the '.|' -->
+  <option value=""><%= itm.id %>.| <%= itm.name %> | stk amount: <%= itm.stock_amount %></option>
+<% end %>

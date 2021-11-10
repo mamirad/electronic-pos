@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Items Returns</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Quantity</th>
+      <th>Return at</th>
+      <th>Item</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @items_returns.each do |items_return| %>
+      <tr>
+        <td><%= items_return.quantity %></td>
+        <td><%= items_return.return_at %></td>
+        <td><%= items_return.item %></td>
+        <td><%= link_to 'Show', items_return %></td>
+        <td><%= link_to 'Edit', edit_items_return_path(items_return) %></td>
+        <td><%= link_to 'Destroy', items_return, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Items Return', new_items_return_path %>

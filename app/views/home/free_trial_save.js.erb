@@ -1,0 +1,7 @@
+$('#alert_info').html("<%= j(render 'template/alerts')%>");
+<%if @lead.errors.blank?%>
+	$("#requestshow").addClass("hide");
+	$(".request-form-hide").removeClass("hide");
+<%else%>
+	
+<%end%>

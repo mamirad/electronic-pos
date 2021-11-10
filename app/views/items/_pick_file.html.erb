@@ -1,0 +1,6 @@
+
+<%= form_with(url: "#{import_items_path}", html:{'data-remote':'true','data-parsley-validate':'true'},id: 'import_items') do |form| %>
+  <%= form.file_field :file, 'data-parsley-required' => true, 'data-parsley-required-message' => "Xlxs file  is required"  %>
+  <%= form.submit%>
+
+<% end %>

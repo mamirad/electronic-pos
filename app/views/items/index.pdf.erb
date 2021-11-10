@@ -1,0 +1,53 @@
+<style type="text/css">
+  .my_table{
+  border: 2px solid;
+  width:100%;
+}
+.my_table td{
+  padding-left: 2px;
+  border: 1px solid;
+}
+.my_table th{
+  padding-left: 2px;
+  border: 2px solid;
+}
+</style>
+
+<div class="panel panel-default">
+  <center><label>All Prices are subject to change without notice.</label>
+    <p>For Online Order ( <label style="color:red;">0301 49 65 032</label> )</p></center>
+  <div class="table-responsive">
+    <table class="my_table" style="margin-top: 80px;">
+      <thead>
+        <tr>
+          <th>Pic</th>
+          <th>Item(s)</th>
+          <th>Brand</th>
+          <th>Qty</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @items.each do |item| %>
+          <tr>
+            <td>
+              <%if item.item_img.present?%>
+                <img src="<%=request.base_url%><%= item.item_img.url %>" style="width: 50px; height: auto; display: inline;">
+              <%end%>
+            </td>
+            <td>
+              <%= item.name %></td>
+            <td><%= item.brand%></td>
+            <td><%= item.description%></td>
+            <td>
+              <span class="glyphicon glyphicon-upload"></span><%= number_to_currency(item.price , unit: config.currency)%>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <label>Developed by: VALIDSOL Software House(0301 49 65 032)</label>
+</div>
+

@@ -1,0 +1,3 @@
+$('#alert_info').html("<%= j(render 'template/alerts')%>");
+$(".balance").html('<%=@sale.remaining_amount%>');
+$(".price_output").val("<%=@sale.total_amount%>");

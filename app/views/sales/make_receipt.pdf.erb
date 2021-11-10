@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Example 1</title>
+    <link rel="stylesheet" href="style.css" media="all" />
+    <style type="text/css">
+      .clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+a {
+  color: #5D6975;
+  text-decoration: underline;
+}
+
+body {
+  position: relative;
+  
+
+  color: #001028;
+  background: #FFFFFF; 
+  font-family: Arial, sans-serif; 
+  font-size: 12px; 
+  font-family: Arial;
+}
+
+header {
+  padding: 10px 0;
+  margin-bottom: 30px;
+}
+
+#logo {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+#logo img {
+  width: 90px;
+}
+
+h1 {
+  border-top: 1px solid  #5D6975;
+  border-bottom: 1px solid  #5D6975;
+  color: #5D6975;
+  font-size: 2.4em;
+  line-height: 1.4em;
+  font-weight: normal;
+  text-align: center;
+  margin: 0 0 20px 0;
+  background: url(dimension.png);
+}
+
+#project {
+  float: left;
+}
+
+#project span {
+  color: #5D6975;
+  text-align: right;
+  width: 52px;
+  margin-right: 10px;
+  display: inline-block;
+  font-size: 0.8em;
+}
+
+#company {
+  float: right;
+  text-align: right;
+}
+
+#project div,
+#company div {
+  white-space: nowrap;        
+}
+
+#notices .notice {
+  color: #5D6975;
+  font-size: 1.2em;
+}
+
+footer {
+   position: absolute; 
+   bottom:-100;
+   width:100%;
+}
+.my_table{
+  border: 2px solid;
+  width:100%;
+}
+.my_table td{
+  padding-left: 2px;
+  border: 1px solid;
+}
+.my_table th{
+  padding-left: 2px;
+  border: 2px solid;
+}
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="clearfix-">
+       <!--  <div id="logo">
+          <img src="logo.png">
+        </div> -->
+        <h1><%=@sale.customer&.full_name_with_phone%> </h1>
+        <div id="company" class="clearfix" style="text-align:left">
+          <div><%=@configurations.store_name%></div>
+          <div><%=@configurations.address%><br /><%=@configurations.city%></div>
+          <div><%=@configurations.phone_number%></div>
+        </div>
+        <div id="project">
+          <div><span>Customer</span> <%=@sale.customer&.full_name%> </div>  
+          <div><span>DATE</span> 
+            <%=date_format(@sale.created_at)%>
+          </div>  
+          <div><span><b>Invoice #</b></span> 
+            <%=@sale.id%>
+          </div>
+        </div>
+      </header>
+      <main>
+        <table class="my_table" style="margin-top: 80px;">
+          <thead>
+            <tr>
+              
+              <th>SR#</th>
+              <th>Item(s)</th>
+              <th>Brand</th>
+              <th>QTY</th>
+              <th>Price</th>
+              <th>Total </th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <%@line_items.each_with_index do |line_item,index| %>
+              <tr>
+                <td nowrap><%= index+=1 %></td>
+                <td><%=line_item.item.name%></td>
+                <td><%=line_item.item.brand%></td>
+                <td><%=line_item.quantity%><%= line_item.item.item_unit%></td>
+                <td nowrap><%= number_to_currency(line_item.price.to_i ,unit: 'Rs: ')%></td>
+                <td nowrap><%= number_to_currency(line_item.total_price.to_i,unit: 'Rs: ') %></td>
+            
+              </tr>
+            <% end %>
+            <tr>
+              <th colspan="5" style="text-align: center;">
+                Total
+              </th>
+              <th>
+                <%= number_to_currency(@sale.total_amount,unit: 'Rs: ') %>
+              </th>
+
+            </tr>
+            
+           
+          </tbody>
+        </table>
+
+
+        <header class="clearfix-">
+          <div id="company" class="clearfix">
+            <div style="width:50%;">
+              <h2>Grand Total</h2>
+              <table class="my_table" style="border:4px solid red;">
+                <tr>
+                  <th>
+                    Total Amount
+                  </th>
+                  <th>
+                    <%= number_to_currency(@sale.total_amount, unit: 'Rs: ')%>
+                  </th>
+                </tr>
+                <tr>
+                  <th>
+                    Paid Amount
+                  </th>
+                  <th>
+                    <%= number_to_currency(@payments.pluck(:amount).inject(&:+), unit: 'Rs: ')%>
+                  </th>
+                </tr>
+                <tr>
+                   <th>
+                    Net Payable Amount
+                  </th>
+                  <th>
+                    <%= number_to_currency(@sale.remaining_amount, unit: 'Rs: ')%>
+                  </th>
+                </tr>
+              </table>
+            </div>
+          </div>
+          
+          <div id="project">
+            <div style="font-size: 15px;">
+              <%if @payments.present?%>
+                <h2>Ledger Histroy</h2>
+                <table class="my_table" >
+                  <tr>
+                    <th>Amount</th>
+                    <th>Date</th>        
+                  </tr>
+                  <%@payments.each do |payment|%>
+                    <tr>
+                      <td><%= number_to_currency(payment.amount, unit: 'Rs: ')%></td>
+                      <td><%= date_format(payment.created_at)%></td>
+                    </tr>
+                  <%end%>
+                </table>
+              <%else%>
+              <!-- <h3>No Ledger histroy found</h3> -->
+             <%end %> 
+
+
+
+            </div>
+          </div>
+        </header>
+      </main>
+      <div style="clear:both;">
+        <br>
+        <hr>
+        <span>Develop By: Validsol Software House, KRK (03014965032)</span>
+        <span style="float: right;">We simplify your Business</span>
+      </div>
+    </div>
+  </body>
+</html>

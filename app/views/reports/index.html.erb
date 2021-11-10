@@ -1,0 +1,21 @@
+<table class="table table-bordered">
+	<tr>
+		<th>Month</th>
+		<th>sale</th>
+		<th>Received</th>
+		<th>owned</th>
+		<th>Profit</th>
+	</tr>
+	<%index=0%>
+	<%@total_sale.each do |k,v|%>
+	<tr>
+		<td><%=k.strftime("%B")%></td>
+		<td><%=v%></td>
+		<td><%=v-@total_own[k]%></td>
+		<td><%=@total_own[k]%></td>
+		<td><%=@total_profit[k]%></td>
+	</tr>
+	<%end%>
+
+
+</table>

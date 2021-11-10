@@ -1,0 +1,40 @@
+<% content_for :meta_tags do %>
+  <meta property="og:url"           content="<%=request.url%>" />
+  <meta property="og:type"          content="website" />
+  <meta property="og:title"         content="THE BEST CHICKEN" />
+  <meta property="og:description"   content="Fresh, save and health Food" />
+  <meta property="og:image"         content="<%=request.base_url%><%=image_path("bfc.jpg")%>" />
+<% end %>
+<div class="row">
+<%if @items.present?%>
+  <%@items.each do |item|%>
+      <div class="col-md-3">
+        <div class="product_container text-center">
+          <a href="<%=single_item_path(item_id:item.id,brand:Base64.encode64(session[:brand]),store:Base64.encode64(session[:store]))%>">
+            <center><img src="<%=item.item_img.url%>" class="product_img"></center>
+            <div class="product_title"><%=item.name%> <span class="red-color">(Brand:<%=item.brand.upcase%>)</span></div>
+            <div class="product_price">
+                <span class="discount_price">
+                  <%="Rs:#{item.discount}" if item.discount.present?%> 
+                </span>
+                <span class=<%='org_price' if item.discount.present?%>>
+                  Rs: <%=item.price%>
+                </span>
+            </div>
+          </a>
+          <%= social_share_button_tag(item.name, url:request.base_url+single_item_path(item_id:item.id,store:Base64.encode64(session[:store]),brand:Base64.encode64(session[:brand])))%>
+          
+        </div>    
+      </div>
+  <%end%>
+<%else%>
+  <h1 class="text-center">No Record Found:</h1>
+  <h2 class="text-center">
+    <a href="tel:03014965032" class="text-center btn btn-success">
+      <i class="fa fa-phone  red-color "></i>
+      0301 49 65 032
+    </a>
+  </h2>
+
+<%end%>
+</div>

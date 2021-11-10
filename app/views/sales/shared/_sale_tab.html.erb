@@ -1,0 +1,93 @@
+<style>
+      #interactive.viewport {position: relative; width: 100%; height: auto; overflow: hidden; text-align: center;}
+      #interactive.viewport > canvas, #interactive.viewport > video {max-width: 100%;width: 100%;}
+      canvas.drawing, canvas.drawingBuffer {position: absolute; left: 0; top: 0;}
+    </style>
+
+<%= form_for (@sale) do |f| %>
+
+<div class="row item_search_wrapper hidden-print">
+  <div class="col-sm-4">
+      <h4 class="text-primary">
+        <span class="input-group-btn"> 
+          <button class="btn btn-default" type="button" data-toggle="modal" data-target="#livestream_scanner">Scan
+            <i class="fa fa-barcode"></i>
+          </button> 
+        </span>
+      </h4>
+
+    
+      <input placeholder="Search Item" data-behavior="autocomplete"  class="form-control" type="text" name="q" id="auto_search_item" autocomplete="off">
+
+
+      <h4 class="text-primary"><span class="glyphicon glyphicon-search"></span> Customer</h4>
+      <input placeholder="Search" data-customer="autocomplete" class="form-control" type="text" name="q" id="auto_search_customer" autocomplete="off">
+
+
+      <br>
+      <div class="input-group has-success total_price_output" style="z-index: 0;">
+        <span class="input-group-addon">Total Amount Rs: </span>
+        <input type="text" class="form-control price_output" readonly="" value="<%=@sale.total_amount.to_f%>">
+      </div>
+      <br>
+      <div class="input-group has-success total_price_paid" style="z-index: 0;">
+        <span class="input-group-addon price_output_paid">Total Paid Rs: </span>
+        <input type="hidden" class="form-control" id="payment_sale_id" name="payment_sale_id"  value="<%=@sale.id%>">
+        <input type="number" class="form-control price_output_paid" id="price_output_paid" name="credit"  value="00.00">
+      </div>
+      <br>
+       <%= link_to 'Make Payment','#',class: 'btn btn-warning',id: 'make_payment', data: { confirm: 'Are you sure?' } %>
+       <%= link_to '',"/sales/#{ Base64.encode64(@sale.id.to_s)}/make_receipt.pdf",class: 'btn btn-info fa fa-print',id: 'make_receipt'%>
+       <%if @sale.customer&.phone_number.present?%>
+        <%= link_to '',"sms:#{@sale.customer&.phone_number}?body=Dear #{@sale.customer.full_name} BHI AOA! %0a‎click link below to check invoice  %0a‎http://#{AppConfig['url']}/sales/#{ Base64.encode64(@sale.id.to_s)}/make_receipt.pdf %0a‎Thanks from BFC KRK%0a‎03014965032",class: 'fa fa-envelope btn btn-warning ',id: ''%>
+        <%= link_to '',"https://wa.me/+#{@sale.customer&.international_phone_format}?text=Dear #{@sale.customer.full_name} %0a‎Click on below link to view invoice  %0ahttp://#{AppConfig['url']}/sales/#{ Base64.encode64(@sale.id.to_s)}/make_receipt.pdf %0aThanks from BFC KRK&attachment=http://#{AppConfig['url']}/sales %0a‎03014965032",class: 'fa fa-whatsapp btn btn-success ',id: '',target:'_blank'%>
+        <%end%>
+
+    <!-- <button class="btn btn-success" data-toggle="modal" data-target="#customItem">
+      Create Custom Item
+    </button> -->
+  </div>
+  <div class="col-sm-8">
+    <div class="searched_items">
+      <%#= render :partial => 'template/form_errors', :object => @sale %>
+
+      <h4 class="text-primary"><span class="glyphicon glyphicon-tags"></span> Items</h4>
+      <div class="added_items">
+
+
+
+        <%= render :partial => 'sales/shared/added_items', :locals=>{:sale=>@sale} %>
+
+
+
+        
+      </div>
+      <div class="added_customer" id="added_customer">
+        
+      </div> 
+      <div class="sale_payments col-sm-12">
+        <%= render :partial => 'sales/shared/sale_payments', :locals => {:sale => @sale,:payments=>@payments} %>
+      </div>
+      <!-- <div class="row">
+        <div class="sale_totals col-sm-4 hidden-print">
+          <%#= render :partial => 'sales/shared/sale_totals', :locals=>{:f=>f} %>
+        </div>
+        <div class="sale_payments col-sm-8">
+          <%#= render :partial => 'sales/shared/sale_payments', :locals => {:f => f} %>
+        </div>  
+      </div> -->
+      <%#= render :partial => 'sales/shared/searched_items' %>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="print_totals visible-print">
+  <%= render :partial => 'sales/shared/invoice_totals' %>
+</div>
+<%end%>
+<%= render :partial => 'template/barcode_modal' %>
+ 

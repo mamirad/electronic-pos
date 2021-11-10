@@ -1,0 +1,54 @@
+<%#= render :partial => 'logged_in' %>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-2">
+			<a href="/items">
+				<div class="widget-info">
+					<h2><b>Stock Amount</b></h2>
+					<h3><%=number_to_currency(@stock_in_hand_price, unit: config.currency)%></h3>
+				</div>
+			</a>
+		</div>
+		<div class="col-md-2">
+			<a href="/sales?own_sale=true&skip_start_date=true">
+				<div class="widget-info">
+					<h2><b>Own Amount</b></h2>
+					<h3><%=number_to_currency(@own_amt, unit: config.currency)%></h3>
+				</div>
+			</a>
+		</div>
+		<div class="col-md-2">
+			<a href="/customers">
+				<div class="widget-info">
+					<h2><b>Customer(s)</b></h2>
+					<h3><%=@customer_count%></h3>
+				</div>
+			</a>
+		</div>
+		<div class="col-md-2">
+			<div class="widget-info">
+				<h3><b>Defaulter Customer(s)</b></h3>
+				<h3><%=@defaulter_customer%></h3>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="widget-info">
+				<h2><b>Store Balance</b></h2>
+				<h3><%=number_to_currency(@amt_in_hand,unit:config.currency)%></h3>
+			</div>
+		</div>
+	</div>
+</div>
+<% 
+@a = Expense.cash_in.where("created_at>=?",Time.now.beginning_of_month).group("DATE_TRUNC('month', created_at)").sum(:price)
+@b = Expense.cash_out.where("created_at>=?",Time.now.beginning_of_month).group("DATE_TRUNC('month', created_at)").sum(:price)
+%>
+
+<style type="text/css">
+	.widget-info{
+		border: 2px solid;
+		border-radius: 11px;
+		text-align: center;
+		background-color: beige;
+	}
+</style>
