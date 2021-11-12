@@ -9,7 +9,7 @@ production:
   <<: *default
   username: deploy
   password: India4@)
-  database: pos_development
+  database: electronic_pos_production
 
 
 development:
@@ -18,6 +18,6 @@ development:
   # port: 5432 
   # username: deploy
   # password: India4@)
-  database: pos_development
+  database: electronic_pos_development
 
 

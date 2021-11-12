@@ -71,6 +71,20 @@ class CustomersController < ApplicationController
                                      :city,
                                      :state,
                                      :zip,
-                                     :published)
+                                     :published,
+                                     :father_or_spouse,
+                                     :salary_or_income,
+                                     :job_or_work_address,
+                                     :cnic_no,
+                                     :job_duration,
+                                     :present_address,
+                                     :house_ownership,
+                                     :permanent_address,
+                                     :cast,
+                                     :check_no,
+                                     :dob,
+                                     :bank,
+                                     :profession_or_rank,
+                                     :check_ownership)
   end
 end

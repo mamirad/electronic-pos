@@ -7,6 +7,7 @@
             <th>Name</th>
             <th>Own</th>
             <th>Phone</th>
+            <th>Cnic</th>
             <th>Address</th>
 
           </tr>
@@ -19,6 +20,7 @@
               <td><%= customer.full_name %></td>  
               <td><%=customer.sales.sum(:remaining_amount)%></td>
               <td><%= customer.phone_number%></td>
+              <td><%= customer.cnic_no%></td>
               <td><%= customer.city_address%></td>
               <td>
                 <%= link_to 'Show', edit_customer_path(customer) %> | <%= link_to 'Destroy', customer, method: :delete, data: { confirm: 'Are you sure?' } %>|

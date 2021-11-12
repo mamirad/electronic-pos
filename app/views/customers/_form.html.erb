@@ -1,55 +1,115 @@
 <div class="panel panel-default">
   <div class="panel-heading">Customer Details</div>
   <div class="panel-body">
-  <%= form_for(@customer) do |f| %>
+  <%= form_for @customer, html:{'data-parsley-validate':'true'} do |f| %>
     <%= render :partial => 'template/form_errors', :object => @customer %>
 
       <div class="row">
         <div class="col-sm-6">
           <label>First Name</label>
-          <%= f.text_field :first_name, :class => "form-control", :placeholder => "First Name" %>
+          <%= f.text_field :first_name, :class => "form-control", :placeholder => "First Name",required:true %>
         </div>
         <div class="col-sm-6">
           <label>Last Name</label>
-          <%= f.text_field :last_name, :class => "form-control", :placeholder => "Last Name" %>
+          <%= f.text_field :last_name, :class => "form-control", :placeholder => "Last Name",required:true %>
         </div>
       </div>
 
-        <div class="row">
-          <div class="col-sm-6">
-            <label>Phone Number</label>
-            <%= f.text_field :phone_number, :class => "form-control", :placeholder => "Phone Number" %>
-          </div>
-          <div class="col-sm-6">
-            <label>Email Address</label>
-            <%= f.text_field :email_address, :class => "form-control", :id =>  "exampleInputEmail1", :placeholder => "Email Address" %>
-          </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <label>Phone Number</label>
+          <%= f.text_field :phone_number, :class => "form-control", :placeholder => "Phone Number",required:true %>
         </div>
-        <div class="row">
-          <div class="col-sm-6">
-            <label>Address</label>
-            <%= f.text_field :address, :class => "form-control", :placeholder => "Address" %>
-          </div>
-          <div class="col-sm-6">
-            <label>City</label>
-            <%= f.text_field :city, :class => "form-control", :placeholder => "City" %>
-          </div>
+        <div class="col-sm-6">
+          <label>Email Address</label>
+          <%= f.text_field :email_address, :class => "form-control", :id =>  "exampleInputEmail1", :placeholder => "Email Address" %>
         </div>
-        <div class="row">
-          <div class="col-sm-6">
-            <label>State</label>
-            <%= f.text_field :state, :class => "form-control", :placeholder => "State" %>
-          </div>
-          <div class="col-sm-6">
-            <label>Zip</label>
-            <%= f.text_field :zip, :class => "form-control", :placeholder => "Zip" %>
-          </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <label>Cnic No</label>
+          <%= f.text_field :cnic_no, :class => "form-control", :placeholder => "Cnic Number",required:true %>
         </div>
-        <div class="row">
-          <div class="col-sm-12">
-            <%= f.submit 'Update Customer', :class => "btn btn-success btn-lg" %>
-          </div>
+        <div class="col-sm-6">
+          <label>Cast</label>
+          <%= f.text_field :cast, :class => "form-control", :id =>  "", :placeholder => "cast" %>
         </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <label>Date of Birth</label>
+          <%= f.date_field :dob, :class => "form-control", :placeholder => "Date of Birth",required:true %>
+        </div>
+        <div class="col-sm-6">
+          <label>profession / Job Rank</label>
+          <%= f.text_field :profession_or_rank, :class => "form-control", :id =>  "", :placeholder => "profession / Job Rank",required:true %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <label>Monthly Income</label>
+          <%= f.number_field :salary_or_income, :class => "form-control", :placeholder => "Salary / Income",required:true %>
+        </div>
+        <div class="col-sm-6">
+          <label>Job Duration</label>
+          <%= f.text_field :job_duration, :class => "form-control", :placeholder => "job duration",required:true %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <label>House Ownership</label>
+          <%= f.select :house_ownership,options_for_select(Customer.house_ownerships.keys,f.object.house_ownership),{}, :class => "form-control", :placeholder => "Address",required:true %>
+        </div>
+        <div class="col-sm-6">
+          <label>Cheque No</label>
+          <%= f.text_field :check_no, :class => "form-control", :placeholder => "cheque no",required:true %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <label>Bank Details</label>
+          <%= f.text_field :bank, :class => "form-control", :placeholder => "Bank details",required:true %>
+        </div>
+        <div class="col-sm-6">
+          <label>Cheque Ownership</label>
+          <%= f.select :check_ownership,options_for_select(Customer.check_ownerships.keys,f.object.check_ownership),{}, :class => "form-control", :placeholder => "cheque Ownership",required:true %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <label>Job / Work Address</label>
+          <%= f.text_field :job_or_work_address, :class => "form-control", :placeholder => "Job or work address",required:true %>
+        </div>
+        <div class="col-sm-6">
+          <label>Present Address</label>
+          <%= f.text_field :present_address, :class => "form-control", :placeholder => "Present Address",required:true %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <label>Permanent Address</label>
+          <%= f.text_field :permanent_address, :class => "form-control", :placeholder => "Address",required:true %>
+        </div>
+        <div class="col-sm-6">
+          <label>City</label>
+          <%= f.text_field :city, :class => "form-control", :placeholder => "City",required:true %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6">
+          <label>State</label>
+          <%= f.text_field :state, :class => "form-control", :placeholder => "State" %>
+        </div>
+        <div class="col-sm-6">
+          <label>Zip</label>
+          <%= f.text_field :zip, :class => "form-control", :placeholder => "Zip" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <%= f.submit 'Update Customer', :class => "btn btn-success btn-lg" %>
+        </div>
+      </div>
       <% end %>
   </div>
 </div> 

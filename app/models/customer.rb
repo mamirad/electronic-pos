@@ -1,6 +1,8 @@
 class Customer < ActiveRecord::Base
   acts_as_tenant(:store_configuration)
   has_many :sales
+  enum house_ownership: [:personal,:rented]
+  enum check_ownership: [:customer,:guranteer]
   def full_name
   	"#{first_name} #{last_name}"
   end
@@ -21,7 +23,7 @@ class Customer < ActiveRecord::Base
   end
 
   def city_address
-    self.city+' '+self.address if city.present?
+    self.city.to_s+' '+self.address.to_s if city.present?
   end
 
   def balance
