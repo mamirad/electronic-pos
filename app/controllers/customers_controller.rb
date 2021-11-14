@@ -14,7 +14,17 @@ class CustomersController < ApplicationController
   end
 
   def index
-    @customers = Customer.includes(:sales).paginate(page: params[:page], per_page: 20)
+    options={}
+    options[:conditions]={}
+    options[:raw_query]=[]
+    options[:raw_query] <<  "customers.first_name ILIKE '%#{params[:customer_name]}%'" if params[:customer_name].present?
+    options[:raw_query] <<  "customers.cnic_no ILIKE '%#{params[:cnic_no]}%'" if params[:cnic_no].present?
+    options[:raw_query] <<  "customers.phone_number ILIKE '%#{params[:phone_number]}%'" if params[:phone_number].present?
+    options[:raw_query] <<  "customers.id = '#{params[:customer_id]}'" if params[:customer_id].present?
+    
+    options[:raw_query] = options[:raw_query].join(" and ")
+
+    @customers = Customer.includes(:sales).where(options[:conditions]).where(options[:raw_query]).paginate(page: params[:page], per_page: 20)
     @total_remaining = @customers.sum(:remaining_amount).to_i
   end
 
