@@ -46,6 +46,7 @@
       <thead>
         <tr>
           <th>#</th>
+          <th>AC No</th>
           <th>Created</th>
           <th>Customer</th>
           <th>Type</th>
@@ -63,9 +64,10 @@
           <tr class="<%= sale.remaining_balance == 0.00 && !sale.total_amount.blank? ? 'success' : '' %>">
             <%@profit=@profit+sale.line_items.sum(:profit).to_i%>
             <td><%= sale.id %></td>
+            <td><%=sale.account_no%></td>
             <td><%= date_format(sale.created_at)  %></td>
             <td><%= link_to sale&.customer&.full_name,customer_path(sale&.customer&.id),target:'_blank' if sale.customer.present?%></td>
-            <td><%= sale.sale_type%></td>
+            <td><%= sale.sale_type.camelcase%></td>
             <td><%= number_to_currency(sale.total_amount, unit: config.currency) %></td>
             <td><%= number_to_currency(sale.paid_total, unit: config.currency) %></td>
             <td><%= number_to_currency(sale.remaining_amount.to_f, unit: config.currency) %></td>

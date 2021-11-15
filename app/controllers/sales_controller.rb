@@ -15,7 +15,7 @@ class SalesController < ApplicationController
     options[:raw_query] <<  "sales.remaining_amount > '0'" if params[:own_sale].present?
 
     options[:raw_query] = options[:raw_query].join(" and ")
-    @sales = Sale.completed.where("sales.total_amount > ?",0).where(options[:conditions]).where(options[:raw_query]).includes(:items).paginate(page: params[:page], per_page: 10).order('sales.created_at DESC')
+    @sales = Sale.where("sales.total_amount > ?",0).where(options[:conditions]).where(options[:raw_query]).includes(:items).paginate(page: params[:page], per_page: 10).order('sales.created_at DESC')
     @total_sale_amount = @sales.pluck(:total_amount).inject(&:+).to_i if @sales.present?
     @current_sales = Sale.where(id:@sales.pluck(:id))
     @sale_remaining_amount = @current_sales.sum(:remaining_amount)
@@ -78,7 +78,7 @@ class SalesController < ApplicationController
   end
 
   def new
-    @sale = Sale.create(store_configuration_id:@configurations.id)
+    @sale = Sale.create(store_configuration_id:@configurations.id,sale_type:Sale.sale_types[params[:sale_type]])
     session[:sale_id] = @sale.id
     # @line_items = @sale.line_items
     # @payments = @sale.payments
@@ -510,10 +510,10 @@ class SalesController < ApplicationController
     end
   end
   def update_account_no
-    debugger
-    # set_sale
-    # @sale.account_no = params[:account_no]
-    # @sale.save
+    set_sale
+    @sale.account_no = params[:account_no]
+    @sale.save
+    flash[:success]="Account Number has been set successfully"
   end
 
   private

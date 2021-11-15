@@ -6,6 +6,29 @@
 
 <%= form_for (@sale) do |f| %>
   <div class="row item_search_wrapper hidden-print">
+    <div class="row">
+      <div class="col-md-3">
+            <label>Package Duration</label>
+            <select name="package_duration" id="package_duration_js" class="form-control">
+              <option value="10">10 Months</option>
+              <option value="12">12 Months (1 Year 2 Months)</option>
+              <option value="15">15 Months (1 Year 3 Months)</option>
+              <option value="18">18 Months (1 Year 6 Months)</option>
+            </select>
+      </div>
+      <div class="col-md-3">
+            <label>Monthly Instalment Amount</label>
+            <input type="number" name="monthly_instalment_amount" class="form-control" id="monthly_instalment_amount_js" readonly="true">
+      </div>
+      <div class="col-md-3">
+           <label>Instalment due Date</label>
+            <input type="date" name="Instalment_due_date" class="form-control">
+      </div> 
+      <div class="col-md-3">
+           <label>Promise Date</label>
+            <input type="date" name="promise_date" class="form-control">
+      </div> 
+    </div>
     <div class="col-sm-4">
         <!-- <h4 class="text-primary">
           <span class="input-group-btn"> 
@@ -15,7 +38,7 @@
           </span>
         </h4> -->
         <h4 class="text-primary"><span class="fa fa-cogs"> </span>  Account No</h4>
-        <input type="text" name="account_no" class="form-control" id="account_no_js" placeholder="Enter Account Number">
+        <input type="text" name="account_no" class="form-control" id="account_no_js" placeholder="Enter Account Number" value="<%=@sale.account_no.to_s%>" >
         <h4 class="text-primary"><span class="glyphicon glyphicon-search"></span> Item</h4>
         <input placeholder="Search Item" data-behavior="autocomplete"  class="form-control" type="text" name="q" id="auto_search_item" autocomplete="off">
 
