@@ -9,7 +9,7 @@ class SalesController < ApplicationController
     options[:conditions]={}
     options[:raw_query]=[]
     options[:conditions].deep_merge!(id:params[:sale_id]) if params[:sale_id].present?
-    options[:conditions].deep_merge!(customer_id:params[:customer]) if params[:customer].present? 
+    options[:conditions].deep_merge!(customer_id:params[:customer_id]) if params[:customer_id].present? 
     options[:raw_query].push(params[:start_date].present? ? "sales.created_at >= '#{params[:start_date]}'" : "sales.created_at >= '#{Time.now.at_beginning_of_month}'")  unless params[:skip_start_date].present?
     options[:raw_query] <<  "sales.created_at <= '#{params[:end_date]}'" if params[:end_date].present?
     options[:raw_query] <<  "sales.remaining_amount > '0'" if params[:own_sale].present?

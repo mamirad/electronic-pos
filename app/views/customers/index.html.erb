@@ -1,3 +1,33 @@
+<button class="btn btn-default filter_toggle text-right btn-filter">Filter</button>
+<%#= link_to '',items_path(params.permit(:item_name,:brand,:utf8,:item_category).merge('format':'pdf')),class: 'btn btn-info  fa fa-print',id: 'make_receipt' %>
+<%= link_to 'Reset', items_path if @filer_reset%>
+<div class="filter_box">
+  <%=form_tag customers_path, method: :get do%>
+        <div class="row">
+          <div class="col-md-6">
+            <label>Customer Name</label>
+            <%= text_field_tag :customer_name,params[:customer_name],class: 'form-control'%>
+          </div>
+           <div class="col-md-6">
+            <label>phone No</label>
+            <%= text_field_tag :phone_no,params[:phone_no],class: 'form-control'%>
+           </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <label>ID</label>
+            <%= text_field_tag :customer_id,params[:customer_id],class:'form-control' %>
+          </div>
+           <div class="col-md-6">
+          <label>CNIC No</label>
+            <%= text_field_tag :cnic_no,params[:cnic_no],class:'form-control' %>
+           </div>
+        </div>
+
+    <input type="submit"  class="btn btn-info btn-xs" value="Search">
+
+  <%end%>
+</div>
  <div class="panel panel-default">
     <div class="table-responsive">
       <table class="table table-striped table-bordered table-hover">
@@ -23,7 +53,8 @@
               <td><%= customer.cnic_no%></td>
               <td><%= customer.city_address%></td>
               <td>
-                <%= link_to 'Show', edit_customer_path(customer) %> | <%= link_to 'Destroy', customer, method: :delete, data: { confirm: 'Are you sure?' } %>|
+                <%= link_to 'Show', edit_customer_path(customer),class:'btn btn-default btn-xs' %> | <%= link_to 'Destroy', customer, method: :delete,class:'btn btn-default btn-xs', data: { confirm: 'Are you sure?' } %>|
+                <%= link_to 'view Sales', sales_path(customer_id:customer.id),class:'btn btn-warning btn-xs' %> |
                 <%= link_to '',"https://wa.me/+#{customer&.international_phone_format}?text=Dear #{customer.full_name} ",class: 'fa fa-whatsapp btn btn-success ',id: '',target:'_blank' if customer.phone_number.present?%>
               </td>
             </tr>

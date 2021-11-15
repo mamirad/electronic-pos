@@ -10,7 +10,7 @@
            <div class="col-md-6">
             <label>Customer</label>
             <%=
-              select_tag :customer,
+              select_tag :customer_id,
                options_for_select(Customer.all.map{|customer|[customer.full_name,customer.id]},params[:customer]),
                 class: 'form-control my_select2',
                 include_blank: 'customer',

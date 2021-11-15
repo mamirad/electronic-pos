@@ -13,6 +13,7 @@ class Sale < ActiveRecord::Base
   enum sale_type: [:instalments,:one_time]
   enum sale_status: [:under_verification,:accepted,:rejected,:completed,:in_progress]
 
+
   def remaining_balance
     if self.total_amount.blank?
       balance = 0.00
