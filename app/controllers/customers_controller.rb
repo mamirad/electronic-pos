@@ -2,7 +2,7 @@ class CustomersController < ApplicationController
   before_action :set_customer, only: [:show, :edit, :update, :destroy]
 
   def auto_search
-     search = {first_name_cont: params[:q],last_name_cont: params[:q],id_eq: params[:q],city_cont: params[:q],phone_number_cont:params[:q],m:'or'}
+     search = {first_name_cont: params[:q],last_name_cont: params[:q],id_eq: params[:q],cnic_no_cont: params[:q],city_cont: params[:q],phone_number_cont:params[:q],m:'or'}
     @customers = Customer.ransack(search).result(distinct: true)
 
 

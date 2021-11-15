@@ -83,6 +83,7 @@ PushvendorPos::Application.routes.draw do
       get 'remove_all_items'
       get 'get_sale_obj'
       get 'change_status'
+      get 'update_account_no'
     end
   end
 

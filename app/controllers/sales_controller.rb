@@ -509,6 +509,12 @@ class SalesController < ApplicationController
       format.js { ajax_refresh }
     end
   end
+  def update_account_no
+    debugger
+    # set_sale
+    # @sale.account_no = params[:account_no]
+    # @sale.save
+  end
 
   private
 

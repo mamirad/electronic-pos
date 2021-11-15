@@ -10,8 +10,8 @@ class Sale < ActiveRecord::Base
   accepts_nested_attributes_for :items, allow_destroy: true
   accepts_nested_attributes_for :payments, allow_destroy: true
 
-  enum sale_type: [:at_shop,:online]
-  enum sale_status: [:completed,:in_progress,:cancel]
+  enum sale_type: [:instalments,:one_time]
+  enum sale_status: [:under_verification,:accepted,:rejected,:completed,:in_progress]
 
   def remaining_balance
     if self.total_amount.blank?

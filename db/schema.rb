@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_12_114732) do
+ActiveRecord::Schema.define(version: 2021_11_14_124245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -164,6 +164,7 @@ ActiveRecord::Schema.define(version: 2021_11_12_114732) do
     t.integer "sale_type", default: 0, null: false
     t.integer "sale_status", default: 0, null: false
     t.integer "store_configuration_id"
+    t.string "account_no"
   end
 
   create_table "store_configurations", id: :serial, force: :cascade do |t|

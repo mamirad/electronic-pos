@@ -4,5 +4,6 @@ json.customers do
 		json.phone_number customer.phone_number
 		json.city customer.city
 		json.id customer.id
+		json.cnic_no customer.cnic_no
 	end
 end

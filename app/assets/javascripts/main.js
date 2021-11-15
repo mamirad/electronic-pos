@@ -5,6 +5,24 @@ $(document).ready(function(){
       return false;
     }
   });
+  $(document).on("change", '#account_no_js', function(){
+  	sale_id = $("#payment_sale_id").val();
+  	account_no = $.trim(this.value);
+  	if(account_no=='' || this.value == undefined){
+  		alert("Invalid Account No");
+  	}
+  	else{
+  		 $.ajax({
+	      type: "get",
+	      url: "/sales/"+sale_id+"/update_account_no?account_no="+account_no, 
+	      // data: {override_price: { price: price, line_item_id: line_item_id, sale_id: sale_id,item_id:item_id }},
+	      dataType: "script",
+	      success: function() {
+	      	console.log('account no updated');
+	      }
+	    });
+  	}
+	});
 	$(document).on("change", '#item_price_js', function(){
 		item_id = this.getAttribute("data-item-id");
 		quantity = $(".item_quantity_"+item_id).val();

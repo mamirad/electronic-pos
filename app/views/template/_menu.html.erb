@@ -29,7 +29,16 @@
             </li>
           </ul>
         </li>
-        <li><a href="/sales">Sales</a></li>
+        <li class="dropdown">
+          <a lass="dropdown-toggle" data-toggle="dropdown" href="#">Sale(s)</a>
+          <ul class="dropdown-menu">
+            <li>
+              <a href="/items">Sale Via Instalment</a>
+              <a href="<%=new_sale_path%>">Sale At Once</a>
+              <a href="<%=sales_path%>">View Sale(s)</a>
+            </li>
+          </ul>
+        </li>
         <li class="dropdown">
           <a lass="dropdown-toggle" data-toggle="dropdown" href="#">Items</a>
           <ul class="dropdown-menu">
