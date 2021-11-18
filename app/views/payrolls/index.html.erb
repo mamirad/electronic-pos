@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Payrolls</h1>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Salary</th>
+      <th>Status</th>
+      <th>Employee</th>
+      <th>Action Date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @payrolls.each do |payroll| %>
+      <tr>
+        <td><%= payroll.salary %></td>
+        <td><%= payroll.status %></td>
+        <td><%= payroll.employee.name %></td>
+        <td><%= payroll.created_at%></td>
+        <td><%= link_to 'Show', payroll %></td>
+        <td><%= link_to 'Edit', edit_payroll_path(payroll) %></td>
+        <td><%= link_to 'Destroy', payroll, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Payroll', new_payroll_path %>

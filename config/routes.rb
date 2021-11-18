@@ -1,5 +1,7 @@
 PushvendorPos::Application.routes.draw do
 
+  resources :payrolls
+  resources :employees
   resources :expenses
   resources :item_stocks
   root  to: 'websites#index', as: 'discount'

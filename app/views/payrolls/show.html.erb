@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Salary:</strong>
+  <%= @payroll.salary %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @payroll.status %>
+</p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @payroll.employee %>
+</p>
+
+<%= link_to 'Edit', edit_payroll_path(@payroll) %> |
+<%= link_to 'Back', payrolls_path %>

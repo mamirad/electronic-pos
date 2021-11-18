@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_14_124245) do
+ActiveRecord::Schema.define(version: 2021_11_18_114152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,27 @@ ActiveRecord::Schema.define(version: 2021_11_14_124245) do
     t.string "bank"
     t.string "profession_or_rank"
     t.integer "check_ownership", default: 0
+  end
+
+  create_table "employees", force: :cascade do |t|
+    t.string "name"
+    t.string "cnic"
+    t.string "phone"
+    t.integer "job_rank", default: 0
+    t.date "dob"
+    t.string "city"
+    t.string "permanent_address"
+    t.string "current_address"
+    t.date "doj"
+    t.string "image"
+    t.integer "store_configuration_id"
+    t.string "remarks"
+    t.integer "martial_status", default: 0
+    t.integer "status", default: 0
+    t.string "father_spouse_name"
+    t.string "mobile"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "expenses", force: :cascade do |t|
@@ -151,6 +172,15 @@ ActiveRecord::Schema.define(version: 2021_11_14_124245) do
     t.string "detail"
   end
 
+  create_table "payrolls", force: :cascade do |t|
+    t.integer "salary"
+    t.integer "status", default: 0
+    t.bigint "employee_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["employee_id"], name: "index_payrolls_on_employee_id"
+  end
+
   create_table "sales", id: :serial, force: :cascade do |t|
     t.decimal "amount", precision: 8, scale: 2
     t.decimal "total_amount", precision: 8, scale: 2
@@ -220,4 +250,5 @@ ActiveRecord::Schema.define(version: 2021_11_14_124245) do
   add_foreign_key "expenses", "store_configurations"
   add_foreign_key "item_stocks", "items"
   add_foreign_key "items_returns", "items"
+  add_foreign_key "payrolls", "employees"
 end

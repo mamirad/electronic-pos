@@ -1,0 +1,30 @@
+<%= form_with(model: payroll, local: true) do |form| %>
+  <% if payroll.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(payroll.errors.count, "error") %> prohibited this payroll from being saved:</h2>
+
+      <ul>
+      <% payroll.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :salary %>
+    <%= form.number_field :salary,class:'form-control',required:true %>
+  </div>
+
+   <div class="field">
+    <%= form.label :employee_id %>
+    <%= form.select :employee_id,options_for_select(Employee.all.map{|emp|[emp.name,emp.id]},form.object.employee_id),{prompt:'select Employee'},class:'form-control',required:true%>
+  </div>
+
+
+ 
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

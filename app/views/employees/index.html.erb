@@ -1,0 +1,58 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Employees</h1>
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Cnic</th>
+      <th>Phone</th>
+      <th>Job rank</th>
+      <th>Dob</th>
+      <th>City</th>
+      <th>Permanent address</th>
+      <th>Current address</th>
+      <th>Doj</th>
+      <th>Image</th>
+      <th>Remarks</th>
+      <th>Martial status</th>
+      <th>Status</th>
+      <th>Father or spouse name</th>
+      <th>Mobile</th>
+      <th>salary</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @employees.each do |employee| %>
+      <tr>
+        <td><%= employee.name %></td>
+        <td><%= employee.cnic %></td>
+        <td><%= employee.phone %></td>
+        <td><%= employee.job_rank %></td>
+        <td><%= employee.dob %></td>
+        <td><%= employee.city %></td>
+        <td><%= employee.permanent_address %></td>
+        <td><%= employee.current_address %></td>
+        <td><%= employee.doj %></td>
+        <td><%= employee.image %></td>
+        <td><%= employee.remarks %></td>
+        <td><%= employee.martial_status %></td>
+        <td><%= employee.status %></td>
+        <td><%= employee.father_spouse_name %></td>
+        <td><%= employee.mobile %></td>
+        <td><%=number_to_currency(employee.payrolls.enable.first.salary,unit:'Rs:')%></td>
+        <td><%= link_to 'Show', employee %></td>
+        <td><%= link_to 'Salary Histroy', payrolls_path(employee_id:employee.id)%></td>
+        <td><%= link_to 'Edit', edit_employee_path(employee) %></td>
+        <td><%= link_to 'Destroy', employee, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Employee', new_employee_path %>

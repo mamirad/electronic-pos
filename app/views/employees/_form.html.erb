@@ -1,0 +1,129 @@
+<%= form_with(model: employee, local: true) do |form| %>
+  <% if employee.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(employee.errors.count, "error") %> prohibited this employee from being saved:</h2>
+
+      <ul>
+      <% employee.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="field">
+        <%= form.label :name %>
+        <%= form.text_field :name, class:'form-control'%>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="field">
+        <%= form.label :'Father or Spouse Name' %>
+        <%= form.text_field :father_spouse_name, class:'form-control' %>
+      </div>
+    </div>
+  </div>
+
+<div class="row">
+  <div class="col-md-6">
+  <div class="field">
+    <%= form.label :phone %>
+    <%= form.text_field :phone, class:'form-control' %>
+  </div>
+</div>
+<div class="col-md-6">
+  <div class="field">
+    <%= form.label :mobile %>
+    <%= form.text_field :mobile, class:'form-control' %>
+  </div>
+</div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+  <div class="field">
+    <%= form.label :'Date of Birth'%>
+    <%= form.date_field :dob, class:'form-control' %>
+  </div>
+ </div>
+ <div class='col-md-6'>
+  <div class="field">
+    <%= form.label :city %>
+    <%= form.text_field :city, class:'form-control' %>
+  </div>
+</div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+  <div class="field">
+    <%= form.label :permanent_address %>
+    <%= form.text_field :permanent_address, class:'form-control' %>
+  </div>
+ </div>
+ <div class="col-md-6">
+  <div class="field">
+    <%= form.label :current_address %>
+    <%= form.text_field :current_address, class:'form-control' %>
+  </div>
+</div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="field">
+      <%= form.label :doj %>
+      <%= form.date_field :doj, class:'form-control' %>
+    </div>
+ </div>
+ <div class="col-md-6">
+  <div class="field">
+    <%= form.label :job_rank %>
+    <%= form.select :job_rank,options_for_select(Employee.job_ranks.keys,form.object.job_rank), {},class:'form-control' %>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-6">
+  <div class="field">
+    <%= form.label :martial_status %>
+    <%= form.select :martial_status,options_for_select(Employee.martial_statuses.keys,form.object.martial_status),{}, class:'form-control' %>
+  </div>
+ </div>
+ <div class="col-md-6">
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.select :status,options_for_select(Employee.statuses.keys,form.object.status),{}, class:'form-control' %>
+  </div>
+</div>
+</div>
+
+<div class="row">
+ <div class="col-md-6">
+  <div class="field">
+    <%= form.label :cnic %>
+    <%= form.text_field :cnic, class:'form-control' %>
+  </div>
+ </div>
+ <div class="col-md-6">
+  <div class="field">
+     <%= form.label :image %>
+     <%= form.file_field :image, class:'form-control' %>
+  </div>
+ </div>
+</div>
+
+<div class="row">
+  <div class="col-md-6">
+    <%= form.label :remarks %>
+    <%= form.text_field :remarks, class:'form-control tinymce' %>
+ </div>
+ <div class="col-md-6">
+ </div>
+</div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+
+<% end %>
